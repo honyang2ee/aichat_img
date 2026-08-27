@@ -1,0 +1,670 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PROJÍCĬO — 세계관 안내</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;900&family=Song+Myung&family=Noto+Serif+KR:wght@400;500;600;700;900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg-deep:#0c0906;
+    --bg-panel:#171208;
+    --bg-panel-2:#1e1810;
+    --line: rgba(205,165,69,0.22);
+    --line-strong: rgba(205,165,69,0.4);
+    --text-primary:#ece1c4;
+    --text-muted:#a99872;
+    --text-dim:#6e5f42;
+    --gold:#cda545;
+    --gold-bright:#eccb7c;
+    --gold-deep:#7a5d28;
+    --gold-dim: rgba(205,165,69,0.14);
+    --gold-glow: rgba(236,203,124,0.22);
+    --radius: 2px;
+    --font-display: 'Cinzel', serif;
+    --font-kr: 'Song Myung', serif;
+    --font-body: 'Noto Serif KR', serif;
+    --font-mono: 'JetBrains Mono', monospace;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:
+      radial-gradient(ellipse 900px 560px at 15% -8%, rgba(205,165,69,0.11), transparent 60%),
+      radial-gradient(ellipse 1300px 1000px at 50% 30%, transparent 45%, rgba(0,0,0,0.45) 100%),
+      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E"),
+      var(--bg-deep);
+    color:var(--text-primary);
+    font-family:var(--font-body);
+    line-height:1.75;
+    -webkit-font-smoothing:antialiased;
+  }
+  ::selection{ background:var(--gold-dim); color:var(--text-primary); }
+  a{color:inherit;}
+  @media (prefers-reduced-motion: reduce){
+    *{ animation-duration:0.001ms !important; animation-iteration-count:1 !important; transition-duration:0.001ms !important; scroll-behavior:auto !important; }
+  }
+
+  /* ---------- layout helpers ---------- */
+  .wrap{ max-width:1080px; margin:0 auto; padding:0 28px; }
+  section{ padding:96px 0; border-bottom:1px solid var(--line); }
+  section:last-of-type{ border-bottom:none; }
+  .eyebrow{
+    font-family:var(--font-mono);
+    font-size:12px;
+    letter-spacing:0.18em;
+    color:var(--gold-bright);
+    text-transform:uppercase;
+    display:flex; align-items:center; gap:10px;
+    margin-bottom:14px;
+  }
+  .eyebrow::before{ content:""; width:20px; height:1px; background:var(--gold-bright); display:inline-block; }
+  h2.title{
+    font-family:var(--font-kr);
+    font-weight:400;
+    font-size:clamp(26px,4vw,38px);
+    letter-spacing:0.02em;
+    margin:0 0 28px;
+    color:var(--gold-bright);
+  }
+  p.lead{ color:var(--text-muted); max-width:640px; font-size:15px; }
+  .grid{ display:grid; gap:16px; }
+  .card{
+    background:var(--bg-panel);
+    border:1px solid var(--line);
+    border-radius:var(--radius);
+    padding:24px;
+    position:relative;
+  }
+  .card::before, .card::after{
+    content:""; position:absolute; width:13px; height:13px; opacity:0.75; pointer-events:none;
+    border-color:var(--gold-bright); border-style:solid; border-width:0;
+  }
+  .card::before{ top:-1px; left:-1px; border-top-width:2px; border-left-width:2px; }
+  .card::after{ bottom:-1px; right:-1px; border-bottom-width:2px; border-right-width:2px; }
+  .tag{
+    font-family:var(--font-mono);
+    font-size:11px;
+    color:var(--text-dim);
+    border:1px solid var(--line-strong);
+    border-radius:999px;
+    padding:3px 10px;
+    display:inline-block;
+  }
+  .btn{
+    font-family:var(--font-mono);
+    font-size:13px;
+    letter-spacing:0.05em;
+    background:transparent;
+    color:var(--gold-bright);
+    border:1px solid rgba(205,165,69,0.5);
+    padding:12px 22px;
+    border-radius:var(--radius);
+    cursor:pointer;
+    transition:background .15s ease, color .15s ease;
+  }
+  .btn:hover{ background:var(--gold-bright); color:#0c0906; }
+  .btn:focus-visible, a:focus-visible, select:focus-visible, input:focus-visible{
+    outline:2px solid var(--gold-bright); outline-offset:2px;
+  }
+
+  /* ---------- nav ---------- */
+  nav{
+    position:sticky; top:0; z-index:50;
+    background:rgba(12,9,6,0.86);
+    backdrop-filter: blur(10px);
+    border-bottom:1px solid var(--line);
+  }
+  nav .wrap{ display:flex; align-items:center; justify-content:space-between; padding:16px 28px; }
+  .nav-logo{ font-family:var(--font-mono); font-size:13px; letter-spacing:0.12em; color:var(--text-primary); }
+  .nav-logo b{ color:var(--gold-bright); font-weight:700; letter-spacing:0.06em; }
+  .nav-links{ display:flex; gap:22px; list-style:none; margin:0; padding:0; }
+  .nav-links a{
+    font-family:var(--font-mono); font-size:12px; letter-spacing:0.06em; color:var(--text-muted); text-decoration:none;
+  }
+  .nav-links a:hover{ color:var(--gold-bright); }
+  @media (max-width:720px){ .nav-links{ display:none; } }
+
+  /* ---------- hero ---------- */
+  .hero{ padding:120px 0 90px; border-bottom:1px solid var(--line); position:relative; overflow:hidden; }
+  .hero .wrap{ position:relative; z-index:2; }
+  .hero-eyebrow{ font-family:var(--font-mono); font-size:12px; letter-spacing:0.24em; color:var(--gold-bright); text-transform:uppercase; margin-bottom:22px; }
+  .hero h1{
+    font-family:var(--font-display); font-weight:700;
+    font-size:clamp(50px,9.5vw,100px);
+    margin:0; line-height:0.95; letter-spacing:0.03em; text-transform:uppercase;
+    background:linear-gradient(180deg,#f6ecd2 0%, #d9b25f 55%, #8a6a2f 100%);
+    -webkit-background-clip:text; background-clip:text; color:transparent;
+    text-shadow: 0 3px 0 rgba(0,0,0,0.55), 0 1px 0 rgba(255,241,214,0.25);
+  }
+  .hero-sub{ font-family:var(--font-mono); font-size:14px; color:var(--gold-bright); opacity:0.85; margin:18px 0 40px; letter-spacing:0.05em; }
+  .hero-slogan{ font-size:17px; font-family:var(--font-kr); color:var(--text-primary); max-width:520px; margin-bottom:44px; }
+  .hero-slogan span{ color:var(--gold-bright); }
+
+  .hud-readout{
+    display:inline-flex; align-items:center; gap:10px;
+    font-family:var(--font-mono); font-size:13px; color:var(--gold-bright);
+    background:var(--bg-panel); border:1px solid var(--line-strong);
+    padding:14px 18px; border-radius:var(--radius);
+    box-shadow: inset 0 0 24px rgba(205,165,69,0.08);
+  }
+  .hud-dot{ width:7px; height:7px; border-radius:50%; background:var(--gold-bright); box-shadow:0 0 8px var(--gold-bright); animation:pulse 1.8s infinite; flex-shrink:0; }
+  @keyframes pulse{ 0%,100%{opacity:1;} 50%{opacity:0.35;} }
+  .hud-cursor{ display:inline-block; width:8px; background:var(--gold); margin-left:2px; animation:blink 1s steps(1) infinite; }
+  @keyframes blink{ 50%{ opacity:0; } }
+
+  /* ---------- overview ---------- */
+  .overview-grid{ grid-template-columns: 1.3fr 1fr; align-items:start; }
+  @media (max-width:820px){ .overview-grid{ grid-template-columns:1fr; } }
+  .overview-grid .card p{ color:var(--text-muted); font-size:14.5px; margin:0 0 14px; }
+  .overview-grid .card p:last-child{ margin-bottom:0; }
+  .overview-grid .card strong{ color:var(--gold-bright); }
+  .log-panel{ font-family:var(--font-mono); }
+  .log-head{ display:flex; justify-content:space-between; font-size:11px; color:var(--text-dim); border-bottom:1px solid var(--line); padding-bottom:10px; margin-bottom:14px; letter-spacing:0.08em; }
+  .log-head span.status{ color:var(--gold-bright); }
+  .log-panel p{ font-size:13.5px !important; color:var(--text-muted) !important; font-family:var(--font-body) !important; }
+
+  /* ---------- timeline ---------- */
+  .timeline{ position:relative; padding-left:28px; border-left:1px solid var(--line-strong); }
+  .t-item{ position:relative; padding-bottom:44px; }
+  .t-item:last-child{ padding-bottom:0; }
+  .t-item::before{
+    content:""; position:absolute; left:-33px; top:4px; width:9px; height:9px; border-radius:50%;
+    background:var(--bg-deep); border:2px solid var(--gold-bright);
+  }
+  .t-tag{ font-family:var(--font-mono); font-size:11px; letter-spacing:0.1em; color:var(--gold-bright); margin-bottom:6px; display:block; }
+  .t-item h3{ margin:0 0 8px; font-size:17px; font-weight:700; font-family:var(--font-kr); color:var(--text-primary); }
+  .t-item p{ margin:0; color:var(--text-muted); font-size:14px; max-width:600px; }
+
+  /* ---------- regions ---------- */
+  .region-grid{ grid-template-columns:repeat(3,1fr); }
+  @media (max-width:820px){ .region-grid{ grid-template-columns:repeat(2,1fr); } }
+  @media (max-width:560px){ .region-grid{ grid-template-columns:1fr; } }
+  .region-card .icon{
+    font-size:19px; margin-bottom:16px; width:42px; height:42px; border-radius:50%;
+    display:flex; align-items:center; justify-content:center;
+    border:1px solid var(--line-strong);
+    background:
+      linear-gradient(var(--bg-panel),var(--bg-panel)) padding-box,
+      conic-gradient(from 180deg, var(--gold-bright), var(--gold-deep), var(--gold-bright), var(--gold-deep)) border-box;
+    border:1px solid transparent;
+  }
+  .region-card h3{ margin:0 0 8px; font-size:17px; font-family:var(--font-kr); color:var(--text-primary); }
+  .region-card p{ color:var(--text-muted); font-size:13.5px; margin:0 0 14px; min-height:60px; }
+  .region-card .tags{ display:flex; flex-wrap:wrap; gap:6px; }
+
+  /* ---------- jobs ---------- */
+  .job-table{ width:100%; border-collapse:collapse; font-size:14px; }
+  .job-table th{
+    font-family:var(--font-mono); font-size:11px; letter-spacing:0.08em; text-transform:uppercase;
+    color:var(--gold-bright); text-align:left; padding:12px 14px; border-bottom:1px solid var(--line-strong);
+  }
+  .job-table td{ padding:16px 14px; border-bottom:1px solid var(--line); color:var(--text-muted); vertical-align:top; }
+  .job-table td.role{ color:var(--gold-bright); font-weight:700; white-space:nowrap; font-family:var(--font-kr); }
+  .job-table td.class-name{ color:var(--text-primary); }
+  .job-extra{ font-weight:400; font-size:12px; color:var(--text-muted); }
+  .job-table tr:last-child td{ border-bottom:none; }
+  .job-table-wrap{ overflow-x:auto; }
+
+  /* ---------- roster ---------- */
+  .roster-group-label{ font-family:var(--font-mono); font-size:12px; letter-spacing:0.12em; color:var(--gold-bright); margin:36px 0 16px; text-transform:uppercase; }
+  .roster-group-label:first-of-type{ margin-top:0; }
+  .roster-grid{ grid-template-columns:repeat(3,1fr); }
+  @media (max-width:820px){ .roster-grid{ grid-template-columns:repeat(2,1fr); } }
+  @media (max-width:560px){ .roster-grid{ grid-template-columns:1fr; } }
+  .roster-card{ display:flex; flex-direction:column; align-items:center; text-align:center; }
+  .portrait{
+    width:104px; height:104px; border-radius:50%; overflow:hidden; margin-bottom:16px; flex-shrink:0;
+    border:2px solid var(--gold); background:var(--bg-panel-2);
+    box-shadow:0 0 0 4px rgba(0,0,0,0.25);
+  }
+  .portrait.rank{ border-color:var(--gold-bright); box-shadow:0 0 18px var(--gold-glow), 0 0 0 4px rgba(0,0,0,0.25); }
+  .portrait img{ width:100%; height:100%; object-fit:cover; object-position:top center; display:block; }
+  .roster-card h3{ margin:0 0 2px; font-size:16px; font-family:var(--font-kr); color:var(--text-primary); }
+  .roster-card .role{ font-family:var(--font-mono); font-size:11px; color:var(--gold-bright); margin-bottom:10px; letter-spacing:0.04em; }
+  .roster-card p{ margin:0; font-size:13px; color:var(--text-muted); }
+  .entity-tag{ font-family:var(--font-mono); font-size:10px; color:var(--gold-deep); font-weight:400; margin-left:6px; letter-spacing:0.03em; }
+
+  /* ---------- generator ---------- */
+  .gen-wrap{ display:grid; grid-template-columns:1fr 1fr; gap:24px; align-items:start; }
+  @media (max-width:860px){ .gen-wrap{ grid-template-columns:1fr; } }
+  .gen-form label{ display:block; font-family:var(--font-mono); font-size:11px; color:var(--gold-bright); letter-spacing:0.08em; margin:18px 0 8px; text-transform:uppercase;}
+  .gen-form label:first-child{ margin-top:0; }
+  .gen-form input, .gen-form select{
+    width:100%; background:var(--bg-panel-2); border:1px solid var(--line-strong); color:var(--text-primary);
+    padding:12px 14px; border-radius:var(--radius); font-family:var(--font-body); font-size:14px;
+  }
+  .gen-form .btn{ margin-top:26px; width:100%; padding:14px; font-size:14px; }
+  .gen-form select:disabled{ opacity:0.5; cursor:not-allowed; }
+  .gen-hint{ font-family:var(--font-mono); font-size:11px; color:var(--gold-deep); margin-top:8px; min-height:14px; }
+  .gen-output{
+    background:var(--bg-panel); border:1px solid var(--line-strong); border-radius:var(--radius);
+    padding:26px; font-family:var(--font-mono); min-height:360px; position:relative;
+  }
+  .gen-output .placeholder{ color:var(--text-dim); font-size:13px; padding-top:8px; }
+  .gen-output h4{ margin:0 0 4px; font-family:var(--font-kr); font-size:19px; color:var(--gold-bright); }
+  .gen-output .sub{ font-size:11.5px; color:var(--text-dim); margin-bottom:18px; letter-spacing:0.04em; }
+  .stat-grid{ display:grid; grid-template-columns:repeat(4,1fr); gap:10px; margin:16px 0; }
+  .stat-cell{ background:var(--bg-panel-2); border:1px solid var(--line); padding:8px; border-radius:var(--radius); text-align:center; }
+  .stat-cell .k{ font-size:10px; color:var(--text-dim); display:block; margin-bottom:4px; }
+  .stat-cell .v{ font-size:14px; color:var(--gold-bright); font-weight:700; }
+  .gen-tags{ display:flex; gap:6px; flex-wrap:wrap; margin:14px 0 20px; }
+  .copy-btn{ font-size:11.5px; padding:8px 14px; }
+  .copy-msg{ font-size:11px; color:var(--gold-bright); margin-left:10px; }
+
+  footer{ padding:48px 0; text-align:center; }
+  footer p{ font-family:var(--font-mono); font-size:11px; color:var(--text-dim); letter-spacing:0.05em; }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="wrap">
+    <div class="nav-logo"><b>PROJÍCĬO</b> // ASTRA SYSTEM</div>
+    <ul class="nav-links">
+      <li><a href="#overview">개요</a></li>
+      <li><a href="#timeline">타임라인</a></li>
+      <li><a href="#regions">지역</a></li>
+      <li><a href="#races">종족</a></li>
+      <li><a href="#jobs">직업</a></li>
+      <li><a href="#roster">로스터</a></li>
+      <li><a href="#generator">생성기</a></li>
+    </ul>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="wrap">
+    <div class="hero-eyebrow">ASTRA Inc. PRESENTS</div>
+    <h1>PROJÍCĬO</h1>
+    <div class="hero-sub">FULL-DIVE VRMMORPG · CAPSULE TYPE · ASTRA Inc.</div>
+    <p class="hero-slogan">"당신이 되고 싶은 모습, <span>그 자체가 진실이다.</span>"</p>
+    <div class="hud-readout">
+      <span class="hud-dot"></span>
+      [ T0 | 20XX.XX.XX(SAT) | 05:13 | 🌫 | ??? ]<span class="hud-cursor"></span>
+    </div>
+  </div>
+</header>
+
+<section id="overview">
+  <div class="wrap">
+    <div class="eyebrow">World / 01</div>
+    <h2 class="title">이 세계는 어떻게 돌아가는가</h2>
+    <p class="lead">완전몰입형 VR 기술이 만든 두 번째 삶의 터전, 그리고 그 뒤에 걸린 익명성의 계약.</p>
+    <div class="grid overview-grid" style="margin-top:32px;">
+      <div class="card">
+        <p><strong>ASTRA Inc.</strong> — 완전몰입형 VR 기술을 세계 최초로 상용화한 압도적 1위 글로벌 테크기업. 본사는 한국. 신경접속 인터페이스 '넥서스노드'로 현실과 구분 불가능한 감각을 재현하며 의료·교육·엔터 전반의 표준이 됐다.</p>
+        <p><strong>베일 프로토콜(Veil Protocol)</strong> — 현실 신원(레이어 제로)과 가상 신원(레이어 원)을 철저히 분리·보호하는 핵심 정책. 법적 강제 상황 외엔 아스트라도 임의로 연결하지 않는다. 이 정책 덕분에 유저는 나이·성별·외모와 무관하게 원하는 아바타로 살아갈 수 있다.</p>
+        <p><strong>프로이키오(Projício)</strong> — 아스트라가 서비스하는 세계 최초의 캡슐형 완전몰입 VRMMORPG. 통합 서버, 던전 공략 중심의 세계.</p>
+      </div>
+      <div class="card log-panel">
+        <div class="log-head"><span>INCIDENT_LOG // ARCHIVED</span><span class="status">● RESOLVED</span></div>
+        <p>서버가 한 차례 폭파된 사건이 있었다. 공식 사망자 3명, 중상자 4~5명, 경미한 피해 20명 이상 — 대부분은 피해가 있는지도 모른 채 지나갔다.</p>
+        <p>피해자 보상이 이루어지며 서비스는 정상 운영 중이지만, 사망자 중 일부는 <strong style="color:var(--text-primary)">레이어 원(가상 인격)이 남아 게임 속에 실존</strong>한다는 이야기가 있다. 이 현상의 원리는 아스트라도 공식 언급을 피하고 있다.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="timeline">
+  <div class="wrap">
+    <div class="eyebrow">World / 02</div>
+    <h2 class="title">타임라인</h2>
+    <p class="lead">서비스 개시부터 지금까지, 이 세계가 지나온 시간.</p>
+    <div class="timeline" style="margin-top:44px;">
+      <div class="t-item">
+        <span class="t-tag">[ ORIGIN ]</span>
+        <h3>프로이키오 서비스 개시</h3>
+        <p>세계 최초의 캡슐형 완전몰입 VRMMORPG가 출시되며 전 세계적인 열풍이 분다. 통합 서버 가동, 유저들이 각지의 국가로 흩어져 정착하기 시작한다.</p>
+      </div>
+      <div class="t-item">
+        <span class="t-tag">[ INCIDENT ]</span>
+        <h3>서버 폭파 사건</h3>
+        <p>서버가 폭파되며 다수의 사상자가 발생한다. 뇌에 직접 간섭하는 게임 특성상 서비스 종료 논란이 일었으나, 조사와 배상이 뒤따르며 사태는 일단락된다.</p>
+      </div>
+      <div class="t-item">
+        <span class="t-tag">[ RECOVERY ]</span>
+        <h3>피해 보상 및 서비스 정상화</h3>
+        <p>피해자 대상 보상이 이루어지고 서버는 다시 안정을 찾는다. 그러나 사망자 중 일부의 인격이 게임 속에 남아있다는 소문이 저변에서 계속 돈다.</p>
+      </div>
+      <div class="t-item">
+        <span class="t-tag">[ PRESENT ]</span>
+        <h3>미개방 던전 공략의 시대</h3>
+        <p>아스트라가 주최하는 대형 크로스컨텐츠 이벤트가 이어지고, 최상위 랭커들이 미개방 던전에 도전한다. 그 이면에서는 설명되지 않는 이상 현상 보고가 조용히 늘고 있다.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="regions">
+  <div class="wrap">
+    <div class="eyebrow">World / 03</div>
+    <h2 class="title">여섯 개의 지역</h2>
+    <p class="lead">프로이키오 대륙을 구성하는 여섯 국가. 어디서 시작하느냐가 곧 당신의 이야기가 된다.</p>
+    <div class="grid region-grid" style="margin-top:32px;">
+      <div class="card region-card">
+        <span class="icon">⚙</span>
+        <h3>제국</h3>
+        <p>대륙 중심에 위치한 최대 인구 국가. 스팀펑크 분위기가 강하며 문명이 가장 현대에 가깝다. 던전 '시련의 탑'이 600층 이상 개방되어 있다.</p>
+        <div class="tags"><span class="tag">기공사 전직</span><span class="tag">콜로세움</span></div>
+      </div>
+      <div class="card region-card">
+        <span class="icon">👑</span>
+        <h3>왕국</h3>
+        <p>엘프·드워프·해상왕국 3국 연합체. 한때 최강이었던 엘프는 '현자의 돌'을 잃고 몰락, 세 왕국이 그 행방을 쫓고 있다.</p>
+        <div class="tags"><span class="tag">연성계열 전직</span><span class="tag">현자의돌</span></div>
+      </div>
+      <div class="card region-card">
+        <span class="icon">✚</span>
+        <h3>신성국</h3>
+        <p>대륙에서 유일하게 던전이 없는 나라. 힐러들의 총본산이자 성기사 전직이 가능한 유일한 곳. 예술과 이미지의 도시이기도 하다.</p>
+        <div class="tags"><span class="tag">클레릭</span><span class="tag">성기사 전직</span></div>
+      </div>
+      <div class="card region-card">
+        <span class="icon">❄</span>
+        <h3>설원</h3>
+        <p>동양풍 왕국이 자리한 오픈형 던전 지대. 어둠 속성 히든직업의 전직소가 있으나 난이도가 악명 높다. 메인스토리 빌런의 거점.</p>
+        <div class="tags"><span class="tag">흑마법계열</span><span class="tag">서커스 던전</span></div>
+      </div>
+      <div class="card region-card">
+        <span class="icon">🌵</span>
+        <h3>사막</h3>
+        <p>과거 황금기의 유적이 잠든 땅. 시민권 유무로 차별이 심해 유랑민이 많다. 용병길드 본부가 자리해 있다.</p>
+        <div class="tags"><span class="tag">용병길드 본부</span><span class="tag">유적탐사</span></div>
+      </div>
+      <div class="card region-card">
+        <span class="icon">🌿</span>
+        <h3>밀림</h3>
+        <p>마력폭풍이 존재하는 이형종 플레이어 생성구역. 여러 부족 마을의 연합지이며, 마녀길드 '발푸르기스'가 자리한다.</p>
+        <div class="tags"><span class="tag">이형종 생성구역</span><span class="tag">발푸르기스</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="races">
+  <div class="wrap">
+    <div class="eyebrow">World / 04</div>
+    <h2 class="title">종족 체계</h2>
+    <p class="lead">무엇으로 태어나느냐가, 어디서 눈을 뜨는지를 결정한다.</p>
+    <div class="grid region-grid race-grid" style="margin-top:32px;">
+      <div class="card region-card race-card">
+        <span class="icon">🧍</span>
+        <h3>인간종</h3>
+        <p>종특 없는 기본형. 외형은 자유롭게 꾸밀 수 있으나 특수 종족 보정은 없다. 여섯 국가 중 원하는 곳에서 자유롭게 시작할 수 있는 유일한 종족이다.</p>
+        <div class="tags"><span class="tag">자유 시작</span><span class="tag">추가 과금 없음</span></div>
+      </div>
+      <div class="card region-card race-card">
+        <span class="icon">🧝</span>
+        <h3>아인종</h3>
+        <p>엘프·드워프·수인 등 인간과 닮았으나 뚜렷한 종특을 지닌 종족. 왕국(엘프/드워프/해상) 세 나라의 정체성과 맞닿아 있으며, 국가별 연성 계열 직업에 유리하다.</p>
+        <div class="tags"><span class="tag">왕국 시작</span><span class="tag">경미한 커마 과금</span></div>
+      </div>
+      <div class="card region-card race-card">
+        <span class="icon">👹</span>
+        <h3>이형종</h3>
+        <p>인간형을 벗어난 크리처형 종족. 커마(커스터마이징) 결과의 랜덤성이 강해 의도한 대로 나오지 않는 경우도 흔하다. 밀림 마력폭풍 지대에 패시브 면역을 지닌다. <span style="color:var(--text-dim);">(대표 사례: 고져스 로얄 부숭)</span></p>
+        <div class="tags"><span class="tag">밀림 고정 시작</span><span class="tag">고가 커마 과금</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="jobs">
+  <div class="wrap">
+    <div class="eyebrow">World / 05</div>
+    <h2 class="title">직업 체계</h2>
+    <p class="lead">전위부터 은둔한 특수직까지 — 지역에 따라 열리는 문이 다르다.</p>
+    <div class="job-table-wrap" style="margin-top:32px;">
+      <table class="job-table">
+        <thead>
+          <tr><th>계열</th><th>직업</th><th>전직 조건 / 특이사항</th></tr>
+        </thead>
+        <tbody>
+          <tr><td class="role">전위</td><td class="class-name">기사(성기사·나이트), 전사(광전사·용병전사) <span class="job-extra">외 커스터마이징 직업 다수</span></td><td>성기사는 신성국 전용 · 그 외 제한 없음</td></tr>
+          <tr><td class="role">딜러</td><td class="class-name">검사(마검사 외), 마법사(정령사·매지션·점술사·샤먼 등), 궁수, 암살자, 사수 <span class="job-extra">외 커스터마이징 직업 다수</span></td><td>제한 없음 · 복합 클래스(다중 전직) 가능</td></tr>
+          <tr><td class="role">힐러</td><td class="class-name">클레릭, 샤먼, 학자 <span class="job-extra">외 커스터마이징 직업 다수</span></td><td>정통 클레릭 루트는 신성국 아카데미 기반</td></tr>
+          <tr><td class="role">제작</td><td class="class-name">마이스터(대장장이·공예가·재봉사·연금술사·기공사) <span class="job-extra">외 커스터마이징 직업 다수</span></td><td>기공사는 제국 전용 · 연성계열은 왕국 전용</td></tr>
+          <tr><td class="role">특수</td><td class="class-name">흑마법사·네크로맨서·매드사이언티스트 <span class="job-extra">외 커스터마이징 직업 다수</span></td><td>설원 전용 히든직업 다수 · 전직 퀘스트 난이도 최상급</td></tr>
+          <tr><td class="role">히든</td><td class="class-name">불명</td><td>여러 사례가 소문으로만 퍼져있을 뿐, 공식 전직 경로는 확인된 바 없다</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<section id="roster">
+  <div class="wrap">
+    <div class="eyebrow">World / 06</div>
+    <h2 class="title">캐릭터 로스터</h2>
+    <p class="lead">이번 시즌, 당신과 함께 던전을 공략할 이들 — 그리고 당신을 관찰하고 있는 이들.</p>
+
+    <div class="roster-group-label">◆ 공략 가능 — 6</div>
+    <div class="grid roster-grid">
+      <div class="card roster-card">
+        <div class="portrait rank"><img src="https://raw.githubusercontent.com/honyang2ee/aichat_img/refs/heads/main/%EB%A0%88%EC%98%A4%EB%82%98%EB%93%9C_%ED%94%84%EB%A1%9C%ED%95%84.png" alt="레오나드 펜릴" loading="lazy"></div>
+        <h3>레오나드 펜릴<span class="entity-tag">(플레이어)</span></h3>
+        <div class="role">종합전투랭킹 2위 · 마검사</div>
+        <p>유쾌한 스타 이미지 뒤, 다시 환자로 되돌아갈까 두려워하는 강박을 숨기고 있다.</p>
+      </div>
+      <div class="card roster-card">
+        <div class="portrait"><img src="https://raw.githubusercontent.com/honyang2ee/aichat_img/refs/heads/main/%EB%8D%B0%EC%9D%B4%EB%B3%B8_%ED%94%84%EB%A1%9C%ED%95%84.png" alt="데이본" loading="lazy"></div>
+        <h3>데이본<span class="entity-tag">(플레이어)</span></h3>
+        <div class="role">밀림 대족장 · 창술사</div>
+        <p>회춘한 몸으로 욜로 인생 2회차를 즐기지만, 두고 온 가족에 대한 죄책감을 안고 있다.</p>
+      </div>
+      <div class="card roster-card">
+        <div class="portrait rank"><img src="https://raw.githubusercontent.com/honyang2ee/aichat_img/refs/heads/main/%EA%B3%A0%EC%88%98_%ED%94%84%EB%A1%9C%ED%95%84.png" alt="고수" loading="lazy"></div>
+        <h3>고수<span class="entity-tag">(플레이어)</span></h3>
+        <div class="role">종합전투랭킹 1위 · 정체불명</div>
+        <p>대륙의 전설. 실체는 용족이나 아무도 그의 맨얼굴을 알지 못한다.</p>
+      </div>
+      <div class="card roster-card">
+        <div class="portrait"><img src="https://raw.githubusercontent.com/honyang2ee/aichat_img/refs/heads/main/%ED%94%BC%EC%98%A4_%ED%94%84%EB%A1%9C%ED%95%84.png" alt="피오 아르젠토" loading="lazy"></div>
+        <h3>피오 아르젠토<span class="entity-tag">(플레이어)</span></h3>
+        <div class="role">신성국 · 클레릭(표면)</div>
+        <p>사근사근한 힐러 이미지 뒤로 정보상과 암살자를 겸하는 이중생활을 즐긴다.</p>
+      </div>
+      <div class="card roster-card">
+        <div class="portrait"><img src="https://raw.githubusercontent.com/honyang2ee/aichat_img/refs/heads/main/%EC%95%8C%ED%86%A0_%ED%94%84%EB%A1%9C%ED%95%84.png" alt="알토" loading="lazy"></div>
+        <h3>알토<span class="entity-tag">(플레이어?)</span></h3>
+        <div class="role">밀림 · 연금술사 겸 의사</div>
+        <p>사슴뼈 가면 아래 얼굴을 아는 이가 없다. 타인의 불행을 양분 삼아 살아간다.</p>
+      </div>
+      <div class="card roster-card">
+        <div class="portrait"><img src="https://raw.githubusercontent.com/honyang2ee/aichat_img/refs/heads/main/%EB%82%98%ED%8C%A8_%ED%94%84%EB%A1%9C%ED%95%84.png" alt="나패" loading="lazy"></div>
+        <h3>나패(儺霸)<span class="entity-tag">(NPC)</span></h3>
+        <div class="role">설원 · 매드사이언티스트 겸 서커스단장</div>
+        <p>수십 개의 가면 뒤에서 표본을 연구하다, 서서히 세계의 진실에 다가서고 있다.</p>
+      </div>
+    </div>
+
+    <div class="roster-group-label">◇ NPC — 4</div>
+    <div class="grid roster-grid">
+      <div class="card roster-card">
+        <div class="portrait rank"><img src="https://raw.githubusercontent.com/honyang2ee/aichat_img/refs/heads/main/%EB%B6%80%EC%88%AD_%ED%94%84%EB%A1%9C%ED%95%84.png" alt="고져스 로얄 부숭" loading="lazy"></div>
+        <h3>고져스 로얄 부숭</h3>
+        <div class="role">탱커랭킹 1위 · 어둠의 마이스터</div>
+        <p>염세적인 맑은눈 광인. 극소수의 바운더리 안에서만 다정하다.</p>
+      </div>
+      <div class="card roster-card">
+        <div class="portrait"><img src="https://raw.githubusercontent.com/honyang2ee/aichat_img/refs/heads/main/%EB%8B%A4%EC%9C%88_%ED%94%84%EB%A1%9C%ED%95%84.png" alt="다윈" loading="lazy"></div>
+        <h3>다윈</h3>
+        <div class="role">궁수 겸 암살자</div>
+        <p>평소엔 유하지만, 부숭이 얽히면 미친개가 된다.</p>
+      </div>
+      <div class="card roster-card">
+        <div class="portrait"><img src="https://raw.githubusercontent.com/honyang2ee/aichat_img/refs/heads/main/%EB%82%98%EC%9E%90_%ED%94%84%EB%A1%9C%ED%95%84.png" alt="나자" loading="lazy"></div>
+        <h3>나자</h3>
+        <div class="role">아스트라 총괄이사</div>
+        <p>예고 없이 GM으로 강림하는 변수. 정체를 알 수 없는 흥미 위주의 존재.</p>
+      </div>
+      <div class="card roster-card">
+        <div class="portrait"><img src="https://raw.githubusercontent.com/honyang2ee/aichat_img/refs/heads/main/%EC%8B%9C%EC%9A%B0_%ED%94%84%EB%A1%9C%ED%95%84.png" alt="시우" loading="lazy"></div>
+        <h3>시우</h3>
+        <div class="role">아스트라 대표이사</div>
+        <p>얼굴마담. 소문 속에서만 존재를 드러낸다.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="generator">
+  <div class="wrap">
+    <div class="eyebrow">World / 07</div>
+    <h2 class="title">WHO WILL YOU BE?</h2>
+    <p class="lead">당신만의 프로이키오 캐릭터를 무작위로 배정받으세요.</p>
+
+    <div class="gen-wrap" style="margin-top:32px;">
+      <div class="card gen-form">
+        <label for="genName">이름</label>
+        <input type="text" id="genName" placeholder="비워두면 자동 배정">
+
+        <label for="genGender">성별</label>
+        <select id="genGender">
+          <option value="랜덤">무작위</option>
+          <option value="남성">남성</option>
+          <option value="여성">여성</option>
+          <option value="미설정">미설정</option>
+        </select>
+
+        <label for="genRace">종족</label>
+        <select id="genRace">
+          <option value="랜덤">무작위</option>
+          <option value="인간종">인간종</option>
+          <option value="아인종">아인종</option>
+          <option value="이형종">이형종</option>
+        </select>
+
+        <label for="genRegion">출신 지역</label>
+        <select id="genRegion">
+          <option value="랜덤">무작위</option>
+          <option value="제국">제국</option>
+          <option value="왕국">왕국</option>
+          <option value="신성국">신성국</option>
+          <option value="설원">설원</option>
+          <option value="사막">사막</option>
+          <option value="밀림">밀림</option>
+        </select>
+        <div class="gen-hint" id="genHint"></div>
+
+        <button class="btn" id="genBtn">⟡ 캐릭터 생성</button>
+      </div>
+
+      <div class="gen-output" id="genOutput">
+        <div class="placeholder">← 조건을 선택하고 생성 버튼을 눌러주세요.<br>결과는 이 자리에 표시됩니다.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <p>PROJÍCĬO WORLD GUIDE — ASTRA Inc. · UNOFFICIAL FAN REFERENCE</p>
+</footer>
+
+<script>
+  const REGION_JOBS = {
+    "제국": ["기공사","나이트","용병전사","마검사","궁수","대장장이"],
+    "왕국": ["물약연성사","변환연성사","창조연성사","정령사","재봉사"],
+    "신성국": ["성기사","클레릭","학자","나이트"],
+    "설원": ["흑마법사","네크로맨서","매드사이언티스트","광전사","샤먼"],
+    "사막": ["용병전사","사수","암살자","점술사","학자"],
+    "밀림": ["광전사","샤먼","궁수","연금술사","정령사"]
+  };
+  const REGIONS = Object.keys(REGION_JOBS);
+  const GENDERS = ["남성","여성","미설정"];
+  const RACES = ["인간종","아인종","이형종"];
+  const RACE_FIXED_REGION = { "아인종":"왕국", "이형종":"밀림" };
+  const RACE_HINT = {
+    "인간종": "인간종 — 출신 지역을 자유롭게 고를 수 있습니다.",
+    "아인종": "아인종은 왕국(엘프·드워프·해상) 고정 시작입니다.",
+    "이형종": "이형종은 밀림 고정 시작입니다."
+  };
+  const STATS = ["힘","체력","지력","스태미나","민첩","솜씨","행운","매력"];
+  const GRADES = ["S+","S","A+","A","B+","B","C+","C","D+","D","E+","E"];
+  const TAGS = ["#소문의주인공","#초보처럼안보임","#뒷세계에서유명함","#은둔형","#랭킹에관심없음",
+    "#장비덕후","#말수적음","#친화력만렙","#정체를숨김","#팀보다개인","#의외로다정함","#승부욕의화신",
+    "#커마에진심","#느긋한성격","#직진형","#관찰자기질"];
+  const CODENAMES = ["세이렌","드리프트","노바","키에란","벨라도나","루센트","오르카","페일","그림자","마르스",
+    "이클립스","베스퍼","실비아","크림슨","윈터바인","자칼","오르페우스","루나틱","카산드라","드레이크"];
+
+  function pick(arr){ return arr[Math.floor(Math.random()*arr.length)]; }
+  function pickN(arr, n){
+    const copy = [...arr]; const out = [];
+    for(let i=0;i<n && copy.length;i++){ out.push(copy.splice(Math.floor(Math.random()*copy.length),1)[0]); }
+    return out;
+  }
+
+  const genRaceEl = document.getElementById('genRace');
+  const genRegionEl = document.getElementById('genRegion');
+  const genHintEl = document.getElementById('genHint');
+
+  function syncRegionToRace(){
+    const race = genRaceEl.value;
+    const fixed = RACE_FIXED_REGION[race];
+    if(fixed){
+      genRegionEl.value = fixed;
+      genRegionEl.disabled = true;
+      genHintEl.textContent = RACE_HINT[race];
+    }else{
+      genRegionEl.disabled = false;
+      genHintEl.textContent = race === "랜덤" ? "" : RACE_HINT[race];
+    }
+  }
+  genRaceEl.addEventListener('change', syncRegionToRace);
+  syncRegionToRace();
+
+  document.getElementById('genBtn').addEventListener('click', () => {
+    const nameInput = document.getElementById('genName').value.trim();
+    const genderSel = document.getElementById('genGender').value;
+    const regionSel = document.getElementById('genRegion').value;
+    const raceSel = genRaceEl.value;
+
+    const race = raceSel === "랜덤" ? pick(RACES) : raceSel;
+    const fixedRegion = RACE_FIXED_REGION[race];
+    const region = fixedRegion ? fixedRegion : (regionSel === "랜덤" ? pick(REGIONS) : regionSel);
+    const gender = genderSel === "랜덤" ? pick(GENDERS) : genderSel;
+    const job = pick(REGION_JOBS[region]);
+    const codename = pick(CODENAMES);
+    const name = nameInput || "(미입력)";
+    const tags = pickN(TAGS, 2);
+
+    const statRows = STATS.map(s => `<div class="stat-cell"><span class="k">${s}</span><span class="v">${pick(GRADES)}</span></div>`).join('');
+
+    const summaryText =
+`[프로이키오 캐릭터 프로필]
+이름: ${name}
+코드네임: ${codename}
+성별: ${gender}
+종족: ${race}
+출신: ${region}
+직업: ${job}
+특징: ${tags.join(' ')}`;
+
+    document.getElementById('genOutput').innerHTML = `
+      <h4>${name === "(미입력)" ? codename : name}</h4>
+      <div class="sub">CODENAME: ${codename} · ${race} · ${region} · ${gender}</div>
+      <div class="tag" style="margin-bottom:14px;">${job}</div>
+      <div class="stat-grid">${statRows}</div>
+      <div class="gen-tags">${tags.map(t=>`<span class="tag">${t}</span>`).join('')}</div>
+      <button class="btn copy-btn" id="copyBtn">COPY</button>
+      <span class="copy-msg" id="copyMsg"></span>
+    `;
+
+    document.getElementById('copyBtn').addEventListener('click', async () => {
+      const msg = document.getElementById('copyMsg');
+      try{
+        await navigator.clipboard.writeText(summaryText);
+        msg.textContent = "복사됨 ✓";
+      }catch(e){
+        msg.textContent = "복사 실패 — 직접 선택해 복사해주세요";
+      }
+      setTimeout(()=>{ msg.textContent=""; }, 2500);
+    });
+  });
+</script>
+
+</body>
+</html>
